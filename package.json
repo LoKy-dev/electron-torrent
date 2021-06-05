@@ -1,0 +1,21 @@
+{
+  "name": "electron-torrent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron . --dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack-windows-portable": "electron-builder -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.0.1",
+    "electron-builder": "^22.10.5"
+  },
+  "dependencies": {
+    "webtorrent": "^1.0.0"
+  }
+}
