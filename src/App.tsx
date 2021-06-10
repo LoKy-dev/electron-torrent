@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { electron, process } = window.api;
+const { ipcRenderer } = electron;
+
+interface AppState {
+  torrentFilePath: string
+  downloadFolderPath: string
+}
+
+class App extends Component<any, AppState> {
+  public readonly state: Readonly<AppState> = {
+    torrentFilePath: '',
+    downloadFolderPath: ''
+  }
+
+  constructor(props: Readonly<any>) {
+    super(props);
+    console.log('App - Constructed: ', this.state);
+
+    ipcRenderer.send('palla-bella', 'palla2');
+
+    console.log(`${process.env.USERPROFILE}\\Downloads`);
+
+    // window.electron.ipcRenderer.send('main-process-log-start');
+    // ipcRenderer.on('main-process-log', (event: any, arg: any) => {
+    //   console.log('Main:', arg);
+    // });
+    // ipcRenderer.send('main-process-log-start');
+  }
+
+  render() {
+    return (
+      <div>Tests</div>
+    );
+  }
+
+  componentDidMount() {
+    console.log('App - Mounted');
+  }
 }
 
 export default App;

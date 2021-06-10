@@ -10,11 +10,12 @@ function createWindow () {
     width: 1300,
     height: 1000,
     webPreferences: {
-      // To allow use of require() inside renderer process
-      nodeIntegration: true,
-      // Don't know what it does TODO Capire cosa fa
-      contextIsolation: false,
-      //preload: path.join(__dirname, 'preload.js')
+      // Disallow use of require() inside renderer process for security reasons
+      nodeIntegration: false,
+      // https://www.electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content
+      contextIsolation: true,
+      // All module used by renderer must be implemented in the preload.js
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -79,7 +80,7 @@ String.prototype.hashCodeString = function () {
 
 let ipcSender;
 // Log to renderer console
-ipcMain.on('main-process-log-start', event => {
+ipcMain.once('main-process-log-start', event => {
   ipcSender = event.sender;
   console.log('Log channel opened');
   // ipcSender.send('main-process-log', {dummy: 'data'});
