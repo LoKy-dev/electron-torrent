@@ -16,17 +16,15 @@ class App extends Component<any, AppState> {
 
   constructor(props: Readonly<any>) {
     super(props);
-    console.log('App - Constructed: ', this.state);
+    // console.log('App - Constructed: ', this.state);
 
-    ipcRenderer.send('palla-bella', 'palla2');
-
-    console.log(`${process.env.USERPROFILE}\\Downloads`);
-
-    // window.electron.ipcRenderer.send('main-process-log-start');
-    // ipcRenderer.on('main-process-log', (event: any, arg: any) => {
-    //   console.log('Main:', arg);
-    // });
-    // ipcRenderer.send('main-process-log-start');
+    // console.log(`${process.env.USERPROFILE}\\Downloads`);
+    if (electron.isDev) {
+      ipcRenderer.on('main-process-log', (event: any, arg: any) => {
+        console.log('Main:', arg);
+      });
+      ipcRenderer.send('main-process-log-start');
+    }
   }
 
   render() {

@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const path = require('path');
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const isDev = require('electron-is-dev');
+const isDev = process.env.ELECTRON_IS_DEV;
 const WebTorrent = require('webtorrent')
 
 function createWindow () {
@@ -10,10 +10,13 @@ function createWindow () {
     width: 1300,
     height: 1000,
     webPreferences: {
-      // Disallow use of require() inside renderer process for security reasons
-      nodeIntegration: false,
       // https://www.electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content
+      // https://mattallan.me/posts/electron-context-bridge/#context-bridge
+      allowRunningInsecureContent: false,
       contextIsolation: true,
+      enableRemoteModule: false,
+      nodeIntegration: false,
+      sandbox: true,
       // All module used by renderer must be implemented in the preload.js
       preload: path.join(__dirname, 'preload.js')
     }

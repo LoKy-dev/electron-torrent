@@ -4,6 +4,7 @@ declare global {
   export interface Window {
     api: {
       electron: {
+        isDev: boolean
         ipcRenderer: Electron.IpcRenderer
       }
       process: {

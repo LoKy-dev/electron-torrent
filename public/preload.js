@@ -1,7 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
-console.log(process.env);
-
 // This method exposes the api object to the renderer process
 // Direct object references like 'env: process.env' can't be done for security
 // reasons, object destructuring is required 'env: {...process.env}'
@@ -9,6 +7,7 @@ contextBridge.exposeInMainWorld(
     'api',
     {
       electron: {
+        isDev: process.env.ELECTRON_IS_DEV,
         ipcRenderer: {
           on (channel, listener) { ipcRenderer.on(channel, listener) },
           once: (channel, listener) => ipcRenderer.once(channel, listener),
